@@ -20,13 +20,7 @@ set(HEADERS
 	iir.h
 	mesure.h
 	define.h
-<<<<<<< Updated upstream
 )
-
 add_executable(main ${SRCS} ${HEADERS})
-=======
-		autotests.h
-		)
-add_executable(main_sim ${SRCS} ${HEADERS})
->>>>>>> Stashed changes
+
 

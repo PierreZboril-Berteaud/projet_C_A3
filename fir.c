@@ -92,9 +92,4 @@ absorp firTest(char* filename){
 
 }
 
-void main(){
-	char* filename = "log/log1/log1.dat";
-	firTest(filename);
-	return;
-}
 

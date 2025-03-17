@@ -29,7 +29,3 @@ absorp iirTest(char* filename){
     finFichier(fd);
 	return prevOutput;
 }
-
-int main(){
-    testBlocIIR();
-}
