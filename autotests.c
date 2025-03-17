@@ -117,7 +117,7 @@ void testBlocFIR(){
             .dcir = 2000.f,
     };
 
-    char* filename = "log1.dat";
+    char* filename = "log/log1/log1.dat";
     absorp actualOutput = firTest(filename);
 
     if (fabsf(actualOutput.acr - expectedOutput.acr) < 2.f) {
