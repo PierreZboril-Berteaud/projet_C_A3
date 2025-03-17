@@ -8,14 +8,7 @@ void main(){
     //testBlocIIR();
     //testBlocFIR();
     //firTest("log/log1/log1_fir.dat");
-    oxy myOxy;
-    int cnt=0;
-    while(1){
-	cnt++;
-    	myOxy.spo2 = cnt%10;
-    	myOxy.pouls =cnt%15;
-    	affichage(myOxy);
-    }
+    testBlocAffichage();
     
     return;
 }
