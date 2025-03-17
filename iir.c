@@ -18,6 +18,8 @@ absorp iirTest(char* filename){
         else{
             output.acr = input.acr - prevInput.acr + 0.992*prevOutput.acr;
             output.acir = input.acir - prevInput.acir + 0.992*prevOutput.acir;
+            output.dcr = input.dcr;
+            output.dcir = input.dcir;
             line+=1;
         }
         prevInput = input,
@@ -27,5 +29,5 @@ absorp iirTest(char* filename){
     }
     printf("line: %d", line);
     finFichier(fd);
-	return prevOutput;
+	return output;
 }
