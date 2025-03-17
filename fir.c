@@ -55,15 +55,46 @@ float FIR_TAPS[51]={
 };
 
 absorp firTest(char* filename){
-    float arr_value[51] = {0};
-    int* etat=0;
+	absorp old_value[51] = {0};
+	int arr_size = 0;
 
-	absorp	myAbsorp;
-    FILE* init_file = initFichier(filename);
+	int etat=0;//etat de la lecture du fichier
+	absorp myAbsorp;
+	int sum_acr = 0;
+	int sum_acir = 0;
+	FILE* pf = initFichier(filename);
 
+	while(etat !=EOF)
+	{
+		absorp absorp_fichier = lireFichier(pf,&etat);
+		
 
+		for(int i=0;i<arr_size;i++)
+		{
+			old_value[arr_size] = absorp_fichier;
+			sum_acr += FIR_TAPS[i]*old_value[arr_size-i].acr;
+			sum_acir += FIR_TAPS[i]*old_value[arr_size-i].acir;
 
-	
+			arr_size++;
+			
+		}	
+		myAbsorp.acr = sum_acr;
+	       	myAbsorp.acir = sum_acir;	
+
+		myAbsorp.dcr = absorp_fichier.dcr;
+		myAbsorp.dcir = absorp_fichier.dcir;
+		
+		
+		//finFichier(pf);
+	}
+
 	return myAbsorp;
 
 }
+
+void main(){
+	char* filename = "log/log1/log1.dat";
+	firTest(filename);
+	return;
+}
+

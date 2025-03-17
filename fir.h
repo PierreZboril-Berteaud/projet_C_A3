@@ -3,6 +3,7 @@
 
 #include "define.h"
 #include "fichiers.h"
+
 absorp firTest(char* filename);
 
 #endif
