@@ -1,15 +1,15 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.25)
 project(projet_C_A3)
 
 set(CMAKE_C_STANDARD 11)
 
 
 set(SRCS
+		main_sim.c
 	affichage.c
 	fichiers.c
 	fir.c
 	iir.c
-	main_sim.c
 	mesure.c
 )
 set(HEADERS
@@ -21,5 +21,5 @@ set(HEADERS
 	define.h
 )
 
-add_executable(main_sim ${SRCS} ${HEADERS})
+add_executable(main ${SRCS} ${HEADERS})
 

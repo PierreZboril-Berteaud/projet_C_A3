@@ -56,12 +56,12 @@ float FIR_TAPS[51]={
 
 absorp firTest(char* filename){
     float arr_value[51] = {0};
-    int* etat=0
+    int* etat=0;
 
 	absorp	myAbsorp;
     FILE* init_file = initFichier(filename);
 
-    while(etat != EOF)
+
 
 	
 	return myAbsorp;
