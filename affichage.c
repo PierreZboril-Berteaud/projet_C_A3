@@ -3,7 +3,7 @@
 void affichage(oxy myOxy){
 	if(access(".verrouData",F_OK) !=-1)
 	{
-		
+		printf("impossible d'écrire sur le fichier data");	
 	}
 	else
 	{

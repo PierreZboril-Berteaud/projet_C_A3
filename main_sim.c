@@ -9,8 +9,13 @@ void main(){
     //testBlocFIR();
     //firTest("log/log1/log1_fir.dat");
     oxy myOxy;
-    myOxy.spo2 = 1;
-    myOxy.pouls =1;
-    affichage(myOxy);
+    int cnt=0;
+    while(1){
+	cnt++;
+    	myOxy.spo2 = cnt%10;
+    	myOxy.pouls =cnt%15;
+    	affichage(myOxy);
+    }
+    
     return;
 }
