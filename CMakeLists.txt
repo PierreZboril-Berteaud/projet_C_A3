@@ -12,7 +12,7 @@ set(SRCS
 	mesure.c
 		autotests.c
 		lecture.c
-		main_usb.c)
+		main_sim.c)
 set(HEADERS
 	affichage.h
 	fichiers.h

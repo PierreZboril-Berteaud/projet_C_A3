@@ -1,5 +1,5 @@
 #include "fir.h"
-
+#include <string.h>
 float FIR_TAPS[51]={
         1.4774946e-019,
         1.6465231e-004,
@@ -55,42 +55,43 @@ float FIR_TAPS[51]={
 };
 
 absorp firTest(char* filename){
-    absorp old_values[51] = {0}; //tableau de valeurs initialisées
+    absorp* old_values = malloc(51*sizeof(absorp)); //tableau de valeurs initialisées
+    memset(old_values, 0, 51);
     int counter =0;
-    int etat=0;//etat de la lecture du fichier
+    int etat=0;
 
     absorp myAbsorp;
-
+    absorp temp;
     FILE* pf = initFichier(filename);
     absorp valeur_fichier = lireFichier(pf,&etat); //lecture du fichier
-
     while(etat !=EOF)
     {
-        counter++;
-	    myAbsorp = fir(valeur_fichier,counter,old_values);
 
+	    myAbsorp = fir(valeur_fichier,counter,old_values);
+        counter++;
         //re lecture pour éviter la dernière ligne de 0 (du au EOC)
         valeur_fichier = lireFichier(pf,&etat);
     }
     finFichier(pf);
     printf("ACR : %f`\n",myAbsorp.acr);
     printf("ACIR : %f\n",myAbsorp.acir);
+    free(old_values);
     return myAbsorp;
 
 }
 
-absorp fir(absorp input,int counter,absorp old_values[]){
-	
-	int arr_size = 51;
+absorp fir(absorp input,int counter,absorp* old_values){
+
 	old_values[counter%51] = input;
-	int front = counter %51;
+    absorp output = {0};
 	for(int i=0;i<51;i++) {
-        input.acr += FIR_TAPS[i] * old_values[(front + arr_size - 1 - i) % 51].acr;
-        input.acir += FIR_TAPS[i] * old_values[(front + arr_size - 1 - i) % 51].acir;
-        input.dcr = old_values[50].dcr;
-        input.dcir = old_values[50].dcir;
+
+        output.acr += FIR_TAPS[i] * old_values[(counter+51- i) % 51].acr;
+        output.acir += FIR_TAPS[i] * old_values[(counter+51- i) % 51].acir;
+        output.dcr = old_values[50].dcr;
+        output.dcir = old_values[50].dcir;
     }
 
-	return input;
+	return output;
 	
 }

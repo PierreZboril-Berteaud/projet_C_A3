@@ -5,5 +5,5 @@
 #include "fichiers.h"
 
 absorp firTest(char* filename);
-absorp fir(absorp input,int counter,absorp old_values[]);
+absorp fir(absorp input,int counter,absorp* old_values);
 #endif
