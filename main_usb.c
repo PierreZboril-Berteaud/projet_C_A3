@@ -91,7 +91,7 @@ int main(){
     }
 
     while (1){
-        readData(&ftHandle, &input);
+        input = readData(&ftHandle);
         printf("ACR: %f\n", input.acr);
         printf("DCR: %f\n", input.dcr);
         printf("ACIR: %f\n", input.acir);

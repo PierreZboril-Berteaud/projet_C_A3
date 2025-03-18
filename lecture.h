@@ -17,7 +17,7 @@
 #include <ctype.h>
 #include "define.h"
 
-void readData(FT_HANDLE* ftHandle, absorp* input);
+absorp readData(FT_HANDLE* ftHandle);
 
 
 #endif //PROJET_C_A3_LECTURE_H

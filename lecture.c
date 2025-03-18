@@ -3,8 +3,9 @@
 //
 #include "lecture.h"
 
-void readData(FT_HANDLE* ftHandle, absorp* input) {
-        FT_STATUS ftStatus;
+absorp readData(FT_HANDLE* ftHandle) {
+    absorp input;
+    FT_STATUS ftStatus;
         DWORD EventDWord;
         DWORD TxBytes;
         DWORD RxBytes;
@@ -29,8 +30,9 @@ void readData(FT_HANDLE* ftHandle, absorp* input) {
                 return;
             }
         }
-        input->acr = (int)(RxBuffer[i+1] - '0') * 1000 + (int) (RxBuffer[i+2] - '0') * 100 + (int) (RxBuffer[i+3] - '0') * 10 + (int) (RxBuffer[i+4] - '0');
-        input->dcr = (int)(RxBuffer[i+6] - '0') * 1000 + (int) (RxBuffer[i+7] - '0') * 100 + (int) (RxBuffer[i+8] - '0') * 10 + (int) (RxBuffer[i+9] - '0');
-        input->acir = (int)(RxBuffer[i+11] - '0') * 1000 + (int) (RxBuffer[i+12] - '0') * 100 + (int) (RxBuffer[i+13] - '0') * 10 + (int) (RxBuffer[i+14] - '0');
-        input->dcir = (int)(RxBuffer[i+16] - '0') * 1000 + (int) (RxBuffer[i+17] - '0') * 100 + (int) (RxBuffer[i+18] - '0') * 10 + (int) (RxBuffer[i+19] - '0');
+        input.acr = (int)(RxBuffer[i+1] - '0') * 1000 + (int) (RxBuffer[i+2] - '0') * 100 + (int) (RxBuffer[i+3] - '0') * 10 + (int) (RxBuffer[i+4] - '0');
+        input.dcr = (int)(RxBuffer[i+6] - '0') * 1000 + (int) (RxBuffer[i+7] - '0') * 100 + (int) (RxBuffer[i+8] - '0') * 10 + (int) (RxBuffer[i+9] - '0');
+        input.acir = (int)(RxBuffer[i+11] - '0') * 1000 + (int) (RxBuffer[i+12] - '0') * 100 + (int) (RxBuffer[i+13] - '0') * 10 + (int) (RxBuffer[i+14] - '0');
+        input.dcir = (int)(RxBuffer[i+16] - '0') * 1000 + (int) (RxBuffer[i+17] - '0') * 100 + (int) (RxBuffer[i+18] - '0') * 10 + (int) (RxBuffer[i+19] - '0');
+        return input;
 }
