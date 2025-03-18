@@ -4,10 +4,15 @@
 #include "lecture.h"
 
 absorp readData(){
+    absorp input = {0};
+
     FT_STATUS ftStatus;
+    ftStatus =  FT_SetVIDPID(0403, 6015);
+    if(ftStatus != FT_OK){
+        printf("Failed to set custom VID PID");
+    }
     FT_DEVICE_LIST_INFO_NODE *devInfo;
     DWORD numDevs;
-    absorp input = {0};
 // create the device information list
     ftStatus = FT_CreateDeviceInfoList(&numDevs);
     if (ftStatus == FT_OK) {
@@ -33,26 +38,29 @@ absorp readData(){
         }
     }
 
-    FT_HANDLE ftHandle;
-    DWORD EventDWord;
-    DWORD TxBytes;
-    DWORD RxBytes;
-    DWORD BytesReceived;
-    char RxBuffer[256];
-    ftStatus = FT_Open(0, &ftHandle);
-    if(ftStatus != FT_OK) {
-// FT_Open failed
-        printf("Failed to open device handler");
-        return input;
-    }
-    FT_GetStatus(ftHandle,&RxBytes,&TxBytes,&EventDWord);
-    if (RxBytes > 0) {
-        ftStatus = FT_Read(ftHandle, RxBuffer, RxBytes, &BytesReceived);
-        if (ftStatus == FT_OK) {
-// FT_Read OK
-        } else {
-// FT_Read Failed
-            printf("FT_Read failed");
+    while(1) {
+        FT_HANDLE ftHandle;
+        DWORD EventDWord;
+        DWORD TxBytes;
+        DWORD RxBytes;
+        DWORD BytesReceived;
+        char RxBuffer[256];
+        ftStatus = FT_OpenEx((PVOID) "D30BPUPH",FT_OPEN_BY_SERIAL_NUMBER,&ftHandle);
+        if (ftStatus != FT_OK) {
+            // FT_Open failed
+            printf("Failed to open device handler\n");
+            printf("ftstatus: %d", ftStatus );
+            return input;
+        }
+        FT_GetStatus(ftHandle, &RxBytes, &TxBytes, &EventDWord);
+        if (RxBytes > 0) {
+            ftStatus = FT_Read(ftHandle, RxBuffer, RxBytes, &BytesReceived);
+            if (ftStatus == FT_OK) {
+                // FT_Read OK
+            } else {
+                // FT_Read Failed
+                printf("FT_Read failed");
+            }
         }
     }
 }
