@@ -12,7 +12,7 @@
 #include "define.h"
 #include "mesure.h"
 #include "lecture.h"
-int main(){
+/*int main(){
     absorp input = {0};
     absorp firOutput;
     absorp iirOutput;
@@ -104,4 +104,4 @@ int main(){
     return 0;
 }
 
-
+*/

@@ -55,7 +55,7 @@ float FIR_TAPS[51]={
 };
 
 absorp firTest(char* filename){
-    absorp old_value[51] = {0}; //tableau de valeurs initialisées
+    absorp old_values[51] = {0}; //tableau de valeurs initialisées
     int arr_size = 51;
     int counter =0;
     int front; //avant du tableau (pour gérer tableau circulaire)
@@ -72,38 +72,31 @@ absorp firTest(char* filename){
         myAbsorp.acr = 0;
         myAbsorp.acir = 0;
 
-
-
-        old_value[counter%51] = absorp_fichier;
-
         counter++;
-        front = counter%51;
 
-
-
-        for(int i=0;i<51;i++)
-        {
-            /*Formule du filtre FIR*/
-
-            myAbsorp.acr += FIR_TAPS[i]*old_value[(front+arr_size-1-i)%51].acr; //(front+arr_size-1-i)%51 permet de respecter la condition du circular buffer
-
-            myAbsorp.acir += FIR_TAPS[i]*old_value[(front+arr_size-1-i)%51].acir;
-
-
-        }
-        //Ajout des valeurs brut à dcr et dcir
-        myAbsorp.dcr = old_value[counter%51].dcr;
-        myAbsorp.dcir = old_value[counter%51].dcir;
-
+	fir(myAbsorp,counter,old_values);
 
 
         //re lecture pour éviter la dernière ligne de 0 (du au EOC)
         absorp_fichier = lireFichier(pf,&etat);
-
     }
     finFichier(pf);
     return myAbsorp;
 
 }
 
+absorp fir(absorp input,int counter,absorp old_values[]){
+	
+	int arr_size = 51;
+	old_values[counter%51] = input;
+	int front = counter %51;
+	for(int i=0;i<51;i++) {
+        input.acr += FIR_TAPS[i] * old_values[(front + arr_size - 1 - i) % 51].acr;
+        input.acir += FIR_TAPS[i] * old_values[(front + arr_size - 1 - i) % 51].acir;
+        input.dcr = old_values[50].dcr;
+        input.dcir = old_values[50].dcir;
+    }
 
+	return input;
+	
+}
