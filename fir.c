@@ -55,54 +55,54 @@ float FIR_TAPS[51]={
 };
 
 absorp firTest(char* filename){
-	absorp old_value[51] = {0}; //tableau de valeurs initialisées
-	int arr_size = 0; 
-	int front; //avant du tableau (pour gérer tableau circulaire)
-	int etat=0;//etat de la lecture du fichier
-	
-	absorp myAbsorp;
-	FILE* pf = initFichier(filename); 
-	absorp absorp_fichier = lireFichier(pf,&etat); //lecture du fichier
-	
+    absorp old_value[51] = {0}; //tableau de valeurs initialisées
+    int arr_size = 51;
+    int counter =0;
+    int front; //avant du tableau (pour gérer tableau circulaire)
+    int etat=0;//etat de la lecture du fichier
 
-	while(etat !=EOF)
-	{
-		
-		myAbsorp.acr = 0;
-		myAbsorp.acir = 0;
+    absorp myAbsorp;
+    FILE* pf = initFichier(filename);
+    absorp absorp_fichier = lireFichier(pf,&etat); //lecture du fichier
 
-		
-		
-		old_value[arr_size %51] = absorp_fichier; 
-		
-		arr_size++;
-		front = arr_size%51;
+
+    while(etat !=EOF)
+    {
+
+        myAbsorp.acr = 0;
+        myAbsorp.acir = 0;
 
 
 
-		for(int i=0;i<51;i++)
-		{
-		/*Formule du filtre FIR*/
+        old_value[counter%51] = absorp_fichier;
 
-		myAbsorp.acr += FIR_TAPS[i]*old_value[(front+50-i)%51].acr;
-		
-		myAbsorp.acir += FIR_TAPS[i]*old_value[(front+50-i)%51].acir;
-			
-
-		}
-		//Ajout des valeurs brut à dcr et dcir 
-		myAbsorp.dcr = old_value[arr_size%51].dcr;
-		myAbsorp.dcir = old_value[arr_size%51].dcir;
+        counter++;
+        front = counter%51;
 
 
 
-		//re lecture pour éviter la dernière ligne de 0 (du au EOC)
-		absorp_fichier = lireFichier(pf,&etat);
-		
-	}
+        for(int i=0;i<51;i++)
+        {
+            /*Formule du filtre FIR*/
 
-	finFichier(pf);
-	return myAbsorp;
+            myAbsorp.acr += FIR_TAPS[i]*old_value[(front+arr_size-1-i)%51].acr; //(front+arr_size-1-i)%51 permet de respecter la condition du circular buffer
+
+            myAbsorp.acir += FIR_TAPS[i]*old_value[(front+arr_size-1-i)%51].acir;
+
+
+        }
+        //Ajout des valeurs brut à dcr et dcir
+        myAbsorp.dcr = old_value[counter%51].dcr;
+        myAbsorp.dcir = old_value[counter%51].dcir;
+
+
+
+        //re lecture pour éviter la dernière ligne de 0 (du au EOC)
+        absorp_fichier = lireFichier(pf,&etat);
+
+    }
+    finFichier(pf);
+    return myAbsorp;
 
 }
 
