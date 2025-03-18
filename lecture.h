@@ -14,8 +14,10 @@
 #include "ftd2xx.h"
 #include "WinTypes.h"
 #include <sys/time.h>
+#include <ctype.h>
 #include "define.h"
 
-absorp readData();
+void readData(FT_HANDLE* ftHandle, absorp* input);
+
 
 #endif //PROJET_C_A3_LECTURE_H

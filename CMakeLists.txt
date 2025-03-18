@@ -12,7 +12,8 @@ set(SRCS
 	iir.c
 	mesure.c
 		autotests.c
-		lecture.c)
+		lecture.c
+		main_usb.c)
 set(HEADERS
 	affichage.h
 	fichiers.h
@@ -22,8 +23,7 @@ set(HEADERS
 	define.h
 	lecture.h
 		ftd2xx.h
-		WinTypes.h
-		)
+		WinTypes.h)
 add_executable(main ${SRCS} ${HEADERS})
 target_link_libraries(main m)
 target_link_libraries(main libftd2xx.so)
