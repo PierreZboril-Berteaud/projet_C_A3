@@ -56,31 +56,25 @@ float FIR_TAPS[51]={
 
 absorp firTest(char* filename){
     absorp old_values[51] = {0}; //tableau de valeurs initialisées
-    int arr_size = 51;
     int counter =0;
-    int front; //avant du tableau (pour gérer tableau circulaire)
     int etat=0;//etat de la lecture du fichier
 
     absorp myAbsorp;
-    FILE* pf = initFichier(filename);
-    absorp absorp_fichier = lireFichier(pf,&etat); //lecture du fichier
 
+    FILE* pf = initFichier(filename);
+    absorp valeur_fichier = lireFichier(pf,&etat); //lecture du fichier
 
     while(etat !=EOF)
     {
-
-        myAbsorp.acr = 0;
-        myAbsorp.acir = 0;
-
         counter++;
-
-	fir(myAbsorp,counter,old_values);
-
+	    myAbsorp = fir(valeur_fichier,counter,old_values);
 
         //re lecture pour éviter la dernière ligne de 0 (du au EOC)
-        absorp_fichier = lireFichier(pf,&etat);
+        valeur_fichier = lireFichier(pf,&etat);
     }
     finFichier(pf);
+    printf("ACR : %f`\n",myAbsorp.acr);
+    printf("ACIR : %f\n",myAbsorp.acir);
     return myAbsorp;
 
 }

@@ -14,20 +14,20 @@ int main(){
    
    FILE* myFile =  fopen("../log/log1/log1.dat","r");
    int counter = 0;
-   do
-   {
+
+   do{
 	counter++;
    	myAbsorp = lireFichier(myFile,&etat);
 	myAbsorp = fir(myAbsorp,counter,old_values);
-
 	
    }while(etat !=EOF);
 
     printf("ACR : %f\n",myAbsorp.acr);
     printf("ACIR :%f\n",myAbsorp.acir);
-    printf("DCR: %f\n",myAbsorp.dcr);
-    printf("DCIR: %f\n",myAbsorp.dcir);
-   finFichier(myFile);
+    //printf("DCR: %f\n",myAbsorp.dcr);
+    //printf("DCIR: %f\n",myAbsorp.dcir);
+    //finFichier(myFile);
+    testBlocFIR();
    return 0;
 
 }
