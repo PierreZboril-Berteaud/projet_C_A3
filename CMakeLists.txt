@@ -5,7 +5,6 @@ set(CMAKE_C_STANDARD 11)
 
 
 set(SRCS
-		main_sim.c
 	affichage.c
 	fichiers.c
 	fir.c

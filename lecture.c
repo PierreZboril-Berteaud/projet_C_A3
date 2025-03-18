@@ -4,13 +4,13 @@
 #include "lecture.h"
 
 absorp readData(FT_HANDLE* ftHandle) {
-    absorp input;
+    absorp input = {0};
     FT_STATUS ftStatus;
         DWORD EventDWord;
         DWORD TxBytes;
         DWORD RxBytes;
         DWORD BytesReceived;
-        char RxBuffer[512];
+        char RxBuffer[1000000];
 
     FT_GetStatus(*ftHandle, &RxBytes, &TxBytes, &EventDWord);
         if (RxBytes > 0) {
@@ -23,11 +23,11 @@ absorp readData(FT_HANDLE* ftHandle) {
             }
         }
 
-        int i = 0;
+        long i = 0;
         while(RxBuffer[i] != 10){ //\n CR flag
             i++;
-            if(i >= 512){
-                return;
+            if(i >= 100000){
+                return input;
             }
         }
         input.acr = (int)(RxBuffer[i+1] - '0') * 1000 + (int) (RxBuffer[i+2] - '0') * 100 + (int) (RxBuffer[i+3] - '0') * 10 + (int) (RxBuffer[i+4] - '0');

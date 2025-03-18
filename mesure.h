@@ -5,6 +5,7 @@
 #include "math.h"
 
 oxy mesureTest(char* filename);
+oxy mesure(absorp input, int* nmb_ech, float* prevAC, float* rsir ,float* max_ac_r, float* min_ac_r, float* max_ac_ir, float* min_ac_ir);
 #endif
 
 	

@@ -16,11 +16,6 @@
     absorp input = {0};
     absorp firOutput;
     absorp iirOutput;
-    FILE* fd = fopen("log_usb.dat", "a");
-    if(fd == NULL){
-        printf("Failed to open file log_usb.dat");
-        return 1;
-    }
     FT_STATUS ftStatus;
     ftStatus = FT_SetVIDPID(0403, 6015);
     if (ftStatus != FT_OK) {
@@ -75,7 +70,7 @@
     ftStatus = FT_SetDataCharacteristics(ftHandle, FT_BITS_8, FT_STOP_BITS_1,
                                          FT_PARITY_NONE);
     if (ftStatus == FT_OK) {
-        printf("data trame ok");
+        printf("data trame ok\n");
         // FT_SetDataCharacteristics OK
     } else {
         // FT_SetDataCharacteristics Failed
@@ -89,18 +84,21 @@
     else {
         // FT_SetTimeouts failed
     }
-
+    int nmb_ech = 0;
+    float prevAC, rsir, max_ac_r, min_ac_r, max_ac_ir, min_ac_ir = 0;
+    absorp prevInput = {0};
+    absorp prevOutput = {0};
+    oxy myOxy = {0};
     while (1){
         input = readData(&ftHandle);
+        input = iir(input, &prevInput, &prevOutput);
         printf("ACR: %f\n", input.acr);
-        printf("DCR: %f\n", input.dcr);
-        printf("ACIR: %f\n", input.acir);
-        printf("DCIR: %f\n", input.dcir);
-        fprintf(fd, "%f,%f,%f,%f", input.acr, input.dcr, input.acir, input.dcir);
+        myOxy = mesure(input, &nmb_ech, &prevAC, &rsir, &max_ac_r, &min_ac_r, &max_ac_ir, &min_ac_ir);
+
+        affichage(myOxy);
     }
 
     FT_Close(ftHandle);
-    fclose(fd);
     return 0;
 }
 

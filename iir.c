@@ -31,3 +31,20 @@ absorp iirTest(char* filename){
     finFichier(fd);
 	return output;
 }
+
+absorp iir(absorp input, absorp* prevInput, absorp* prevOutput){
+    absorp output;
+        if(prevOutput->acr == 0 && prevOutput->acir == 0 && prevOutput->dcr == 0 && prevOutput->dcir == 0){ //first input, no predecessor
+            output = input;
+        }
+        else{
+            output.acr = input.acr - prevInput->acr + 0.992*prevOutput->acr;
+            output.acir = input.acir - prevInput->acir + 0.992*prevOutput->acir;
+            output.dcr = input.dcr;
+            output.dcir = input.dcir;
+        }
+        *prevInput = input,
+        *prevOutput = output;
+
+    return output;
+}
