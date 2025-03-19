@@ -2,7 +2,6 @@
 // Created by nirin on 18/03/2025.
 //
 
-#include "main_usb.h"
 
 #include "iir.h"
 #include "fir.h"
@@ -12,7 +11,7 @@
 #include "define.h"
 #include "mesure.h"
 #include "lecture.h"
-/*int main(){
+int main(){
     absorp input = {0};
     absorp firOutput;
     absorp iirOutput;
@@ -77,13 +76,15 @@
         printf("data trame not ok");
     }
     // Set read timeout of 5sec, write timeout of 1sec
-    ftStatus = FT_SetTimeouts(ftHandle, 2, 1000);
+    ftStatus = FT_SetTimeouts(ftHandle, 2, 2);
     if (ftStatus == FT_OK) {
         // FT_SetTimeouts OK
     }
     else {
         // FT_SetTimeouts failed
     }
+    int counter = 1;
+    absorp old_values[51] = {0};
     int nmb_ech = 0;
     float prevAC, rsir, max_ac_r, min_ac_r, max_ac_ir, min_ac_ir = 0;
     absorp prevInput = {0};
@@ -91,15 +92,17 @@
     oxy myOxy = {0};
     while (1){
         input = readData(&ftHandle);
+        input = fir(input, counter, old_values);
         input = iir(input, &prevInput, &prevOutput);
-        printf("ACR: %f\n", input.acr);
+        //printf("ACR: %f\n", input.acr);
         myOxy = mesure(input, &nmb_ech, &prevAC, &rsir, &max_ac_r, &min_ac_r, &max_ac_ir, &min_ac_ir);
-
+        //printf("%d %d", myOxy.pouls, myOxy.spo2);
         affichage(myOxy);
+        counter++;
     }
 
     FT_Close(ftHandle);
     return 0;
 }
 
-*/
+
