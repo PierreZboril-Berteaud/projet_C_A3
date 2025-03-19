@@ -10,7 +10,7 @@ int main(){
    absorp old_values[51] = {0};
    absorp myAbsorp;
    absorp valeur_fichier;
-   oxy myOxy;
+   oxy myOxy = {0};
    oxy OxyTest = {90,100};
    absorp prevInput = {0}; //stock l'entrée précedante
    absorp prevOutpout = {0}; //stock la sortie précendante
@@ -30,7 +30,7 @@ int main(){
       myAbsorp = iir(myAbsorp,&prevInput,&prevOutpout);
       counter++;
       myOxy = mesure(myAbsorp, &nmb_ech, &prevAC, &rsir, &max_ac_r, &min_ac_r, &max_ac_ir, &min_ac_ir);
-      affichage(OxyTest);
+      affichage(myOxy);
 
 
       valeur_fichier = lireFichier(myFile, &etat);
