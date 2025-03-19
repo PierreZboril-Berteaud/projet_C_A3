@@ -78,6 +78,7 @@ int main(){
     // Set read timeout of 5sec, write timeout of 1sec
     ftStatus = FT_SetTimeouts(ftHandle, 2, 2);
     if (ftStatus == FT_OK) {
+        printf("timeout ok\n");
         // FT_SetTimeouts OK
     }
     else {
@@ -90,14 +91,16 @@ int main(){
     absorp prevInput = {0};
     absorp prevOutput = {0};
     oxy myOxy = {0};
+    int readyFlag = 0;
     while (1){
         input = readData(&ftHandle);
         input = fir(input, counter, old_values);
         input = iir(input, &prevInput, &prevOutput);
-        //printf("ACR: %f\n", input.acr);
         myOxy = mesure(input, &nmb_ech, &prevAC, &rsir, &max_ac_r, &min_ac_r, &max_ac_ir, &min_ac_ir);
-        //printf("%d %d", myOxy.pouls, myOxy.spo2);
-        affichage(myOxy);
+        if(myOxy.spo2 != 0 && myOxy.pouls != 0){ //intermediate value
+            affichage(myOxy);
+            printf("%d %d\n", myOxy.pouls, myOxy.spo2);
+        }
         counter++;
     }
 

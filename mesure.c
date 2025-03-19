@@ -67,17 +67,22 @@ oxy mesure(absorp input, int* nmb_ech, float* prevAC, float* rsir ,float* max_ac
         *rsir = 0;
     }
     float ellapsedTime = 0; //in ms
-    oxy myOxy;
+    oxy myOxy = {0};
 
     //BPM calculation
     if(*prevAC <= 0 && input.acr > 0){ //crossed zero
         ellapsedTime = (*(nmb_ech))*0.002; //sample each 2ms
         myOxy.pouls = 60 / ellapsedTime;
-        if(*rsir <= 1){
+        if(*rsir <= 1 && *rsir >= 0.3){ //take margin for the extremum
             myOxy.spo2 = -25*(*rsir) + 110;
         }
         else{
-            myOxy.spo2 = -425/12 * (*rsir) + 120.4;
+            if(*rsir > 1 && *rsir <= 3.5){
+                myOxy.spo2 = -425/12 * (*rsir) + 120.4;
+            }
+        }
+        if(myOxy.spo2 < 0){ //when spo2 = 0 by the sim card
+            myOxy.spo2 = 0;
         }
         *nmb_ech = 0;
         *max_ac_r = 0;
