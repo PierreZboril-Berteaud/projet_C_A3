@@ -30,7 +30,7 @@ int main(){
       myAbsorp = iir(myAbsorp,&prevInput,&prevOutpout);
       counter++;
       myOxy = mesure(myAbsorp, &nmb_ech, &prevAC, &rsir, &max_ac_r, &min_ac_r, &max_ac_ir, &min_ac_ir);
-      affichage(myOxy);
+      affichage(OxyTest);
 
 
       valeur_fichier = lireFichier(myFile, &etat);
