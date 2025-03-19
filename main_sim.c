@@ -11,6 +11,7 @@ int main(){
    absorp myAbsorp;
    absorp valeur_fichier;
    oxy myOxy;
+   oxy OxyTest = {90,100};
    absorp prevInput = {0}; //stock l'entrée précedante
    absorp prevOutpout = {0}; //stock la sortie précendante
    FILE* myFile =  fopen("../log/log1/log1.dat","r");
@@ -29,16 +30,18 @@ int main(){
       myAbsorp = iir(myAbsorp,&prevInput,&prevOutpout);
       counter++;
       myOxy = mesure(myAbsorp, &nmb_ech, &prevAC, &rsir, &max_ac_r, &min_ac_r, &max_ac_ir, &min_ac_ir);
-
       affichage(myOxy);
+
 
       valeur_fichier = lireFichier(myFile, &etat);
 
    }while(etat !=EOF);
+
     printf("ACR : %f\n",myAbsorp.acr);
     printf("ACIR : %f\n",myAbsorp.acir);
     printf("DCR : %f\n",myAbsorp.dcr);
     printf("DCIR : %f\n",myAbsorp.dcir);
+    
 
     finFichier(myFile);
 

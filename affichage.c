@@ -10,7 +10,10 @@ void affichage(oxy myOxy){
 	{
 
 		FILE * data =  fopen("data.txt","w"); //ouvre le fichier data en mode write
-		FILE * verrouData = verrouData = fopen("verrouData","r");; //si le fichier verrouData n'existe pas, on le crée
+		FILE * verrouData = NULL;
+        verrouData = fopen("verrouData.txt","w");; //si le fichier verrouData n'existe pas, on le crée
+        //fprintf(verrouData,"%d\n",1);
+        fputc(1,verrouData);
 
 		if(data==NULL)
 		{
@@ -21,7 +24,7 @@ void affichage(oxy myOxy){
 		fprintf(data,"%d\n",myOxy.pouls); //on met le pouls à la deuxième ligne du data.txt
 
 		fclose(data);
-		remove(".verrouData");
+		remove("verrouData.txt");
 	}
 		
 }
