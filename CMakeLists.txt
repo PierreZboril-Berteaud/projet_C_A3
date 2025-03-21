@@ -10,8 +10,7 @@ set(SRCS
 	fir.c
 	iir.c
 	mesure.c
-		autotests.c
-		lecture.c
+        lecture.c
 		main_usb.c)
 set(HEADERS
 	affichage.h

@@ -1,5 +1,4 @@
 #include "iir.h"
-#include "autotests.h"
 
 absorp iirTest(char* filename){
     absorp prevInput;

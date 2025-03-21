@@ -1,7 +1,6 @@
 #include "iir.h"
 #include "fir.h"
 #include "fichiers.h"
-#include "autotests.h"
 #include "affichage.h"
 #include "define.h"
 #include "mesure.h"
@@ -14,7 +13,11 @@ int main(){
 
    absorp prevInput = {0}; //stock l'entrée précedante
    absorp prevOutpout = {0}; //stock la sortie précendante
-   FILE* myFile =  fopen("../log/log1/log1.dat","r");
+   FILE* myFile =  fopen("../log1.dat","r");
+   if(myFile == NULL){
+       printf("Error while openning log file");
+       return 1;
+   }
    int etat,nmb_ech,counter=0;
    /*stock le nombre d'échantillon,les différents extremums l'entrée précendante*/
    float prevAC, rsir, max_ac_r, min_ac_r, max_ac_ir, min_ac_ir = 0;
