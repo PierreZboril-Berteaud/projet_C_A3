@@ -1,1 +1,0 @@
-/usr/bin/gcc CMakeFiles/main.dir/main_sim.c.o CMakeFiles/main.dir/affichage.c.o CMakeFiles/main.dir/fichiers.c.o CMakeFiles/main.dir/fir.c.o CMakeFiles/main.dir/iir.c.o CMakeFiles/main.dir/mesure.c.o -o main 

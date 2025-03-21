@@ -1,8 +1,8 @@
 main_sim : fir.o iir.o affichage.o mesure.o main_sim.o fichiers.o
-	gcc -o main_sim fir.o iir.o affichage.o mesure.o main_sim.o fichiers.o -lm
+	gcc fir.o iir.o affichage.o mesure.o main_sim.o fichiers.o -lm -o main_sim
 
 main_usb : fir.o iir.o affichage.o mesure.o lecture.o fichiers.o main_usb.o
-	gcc -o main_usb fir.o iir.o affichage.o mesure.o lecture.o fichiers.o main_usb.o -lm ftd2xx
+	gcc fir.o iir.o affichage.o mesure.o lecture.o fichiers.o main_usb.o -l m -l ftd2xx -o main_usb
 
 fir.o : fir.c fir.h define.h fichiers.h
 	gcc -c fir.c

@@ -96,7 +96,6 @@ int main(){
         free(inputArr);
     }
 
-
     FT_Close(ftHandle);
     return 0;
 }
