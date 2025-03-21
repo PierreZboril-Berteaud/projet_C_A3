@@ -85,7 +85,7 @@ absorp fir(absorp input,int counter,absorp* old_values){
 	old_values[counter%51] = input;
     absorp output = {0};
 	for(int i=0;i<51;i++) {
-        output.acr += FIR_TAPS[i] * old_values[(counter+51- i) % 51].acr; //Respecte la condition de circular buffer, le + 51 permet de ne jamais passer en dessous de 0
+        output.acr += FIR_TAPS[i] * old_values[(counter+51 - i) % 51].acr; //Respecte la condition de circular buffer, le + 51 permet de ne jamais passer en dessous de 0
         output.acir += FIR_TAPS[i] * old_values[(counter+51- i) % 51].acir;
         output.dcr = old_values[50].dcr; //stockage de la dernière valeur de dcr
         output.dcir = old_values[50].dcir;

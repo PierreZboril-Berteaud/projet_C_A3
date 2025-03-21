@@ -13,10 +13,8 @@ void affichage(oxy myOxy) {
             if (data == NULL) {
                 printf("erreur lors de l'ouverture du fichier data");
             }
-            if (myOxy.spo2 != 0 && myOxy.pouls != 0) {
-                fprintf(data, "%d\n", myOxy.spo2); //on met le spo2 à la première ligne du data.txt
-                fprintf(data, "%d\n", myOxy.pouls); //on met le pouls à la deuxième ligne du data.txt
-            }
+            fprintf(data, "%d\n", myOxy.spo2); //on met le spo2 à la première ligne du data.txt
+            fprintf(data, "%d\n", myOxy.pouls); //on met le pouls à la deuxième ligne du data.txt
 
 
             fclose(data);
