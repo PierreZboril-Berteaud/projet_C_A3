@@ -13,7 +13,7 @@ int main(){
 
    absorp prevInput = {0}; //stock l'entrée précedante
    absorp prevOutpout = {0}; //stock la sortie précendante
-   FILE* myFile =  fopen("../log1.dat","r");
+   FILE* myFile =  fopen("log1.dat","r");
    if(myFile == NULL){
        printf("Error while openning log file");
        return 1;
