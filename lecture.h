@@ -17,7 +17,9 @@
 #include <ctype.h>
 #include "define.h"
 
-absorp readData(FT_HANDLE* ftHandle);
+#define RX_BUF_SIZE 21000
+
+absorp* readData(FT_HANDLE* ftHandle);
 
 
 #endif //PROJET_C_A3_LECTURE_H

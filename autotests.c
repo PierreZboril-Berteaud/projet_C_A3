@@ -117,7 +117,7 @@ void testBlocFIR(){
             .dcir = 2000.f,
     };
 
-    char* filename = "../log/log1/log1.dat";
+    char* filename = "log1.dat";
     absorp actualOutput = firTest(filename);
 
     if (fabsf(actualOutput.acr - expectedOutput.acr) < 2.f) {
@@ -163,7 +163,7 @@ void testBlocMesure(){
     oxy myOxyRef;
     float mark[2]={0,0};
     int coeff[2]={1,1};
-    char* filename = "../log/log1/log1_iir.dat";
+    char* filename = "log1_iir.dat";
     FILE* myFile_pf=initFichier(filename);
     oxy myOxy = mesureTest(filename);
     myOxyRef.spo2=98;
@@ -190,7 +190,7 @@ void testBlocIIR(){
 
     float mark[4]={0,0,0,0};
     int coeff[4]={1,1,1,1};
-    char* filename = "../log/log1/log1_fir.dat";
+    char* filename = "log1_fir.dat";
     int ref_oxy[4] = {732,2048,1525,2000};
     FILE* myFile_pf=initFichier(filename);
     absorp myAbsorp = iirTest(filename);

@@ -11,8 +11,8 @@
 #include "define.h"
 #include "mesure.h"
 #include "lecture.h"
+
 int main(){
-    absorp input = {0};
     absorp firOutput;
     absorp iirOutput;
     FT_STATUS ftStatus;
@@ -48,11 +48,8 @@ int main(){
     }
 
     FT_HANDLE ftHandle;
-    DWORD EventDWord;
-    DWORD TxBytes;
-    DWORD RxBytes;
-    DWORD BytesReceived;
-    ftStatus = FT_OpenEx((PVOID) "D30BPUPH", FT_OPEN_BY_SERIAL_NUMBER, &ftHandle);
+    ftStatus = FT_Open(0,&ftHandle);
+    //ftStatus = FT_OpenEx((PVOID) "D30BPUPK", FT_OPEN_BY_SERIAL_NUMBER, &ftHandle);
     if (ftStatus != FT_OK) {
         // FT_Open failed
         printf("Failed to open device handler\n");
@@ -75,15 +72,7 @@ int main(){
         // FT_SetDataCharacteristics Failed
         printf("data trame not ok");
     }
-    // Set read timeout of 5sec, write timeout of 1sec
-    ftStatus = FT_SetTimeouts(ftHandle, 2, 2);
-    if (ftStatus == FT_OK) {
-        printf("timeout ok\n");
-        // FT_SetTimeouts OK
-    }
-    else {
-        // FT_SetTimeouts failed
-    }
+
     int counter = 1;
     absorp old_values[51] = {0};
     int nmb_ech = 0;
@@ -91,18 +80,23 @@ int main(){
     absorp prevInput = {0};
     absorp prevOutput = {0};
     oxy myOxy = {0};
-    int readyFlag = 0;
+    absorp* inputArr = NULL;
+    absorp input = {0};
     while (1){
-        input = readData(&ftHandle);
-        input = fir(input, counter, old_values);
-        input = iir(input, &prevInput, &prevOutput);
-        myOxy = mesure(input, &nmb_ech, &prevAC, &rsir, &max_ac_r, &min_ac_r, &max_ac_ir, &min_ac_ir);
-        if(myOxy.spo2 != 0 && myOxy.pouls != 0){ //intermediate value
-            affichage(myOxy);
-            printf("%d %d\n", myOxy.pouls, myOxy.spo2);
+        inputArr = readData(&ftHandle);
+        for(int i = 0; i < (RX_BUF_SIZE/21)-1; i++) {
+            //printf("%f\n", inputArr[i].acr);
+            input = fir(inputArr[i], counter, old_values);
+            input = iir(input, &prevInput, &prevOutput);
+            myOxy = mesure(input, &nmb_ech, &prevAC, &rsir, &max_ac_r, &min_ac_r, &max_ac_ir, &min_ac_ir);
+            if (myOxy.spo2 != 0 && myOxy.pouls != 0) { //intermediate value
+                affichage(myOxy);
+            }
+            counter++;
         }
-        counter++;
+        free(inputArr);
     }
+
 
     FT_Close(ftHandle);
     return 0;
