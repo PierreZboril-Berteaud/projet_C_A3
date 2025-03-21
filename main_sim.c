@@ -8,18 +8,16 @@
 
 int main(){
    absorp old_values[51] = {0};
-   absorp myAbsorp;
-   absorp valeur_fichier;
+   absorp myAbsorp = {0};
+   absorp valeur_fichier = {0};
    oxy myOxy = {0};
 
    absorp prevInput = {0}; //stock l'entrée précedante
    absorp prevOutpout = {0}; //stock la sortie précendante
    FILE* myFile =  fopen("../log/log1/log1.dat","r");
-   int etat=0;
-   int nmb_ech = 0;
+   int etat,nmb_ech,counter=0;
    /*stock le nombre d'échantillon,les différents extremums l'entrée précendante*/
    float prevAC, rsir, max_ac_r, min_ac_r, max_ac_ir, min_ac_ir = 0;
-   int counter = 0;
 
   do{
       if(counter==0) {
@@ -34,6 +32,10 @@ int main(){
 
 
       valeur_fichier = lireFichier(myFile, &etat);
+
+      if(counter == 52){
+          counter =1;
+      }
 
    }while(etat !=EOF);
 
